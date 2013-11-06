@@ -1462,6 +1462,31 @@ namespace LibGit2Sharp.Core
             }
         }
 
+        public static string git_refspec_string(GitRefSpecHandle refSpec)
+        {
+            return NativeMethods.git_refspec_string(refSpec);
+        }
+
+        public static string git_refspec_src(GitRefSpecHandle refSpec)
+        {
+            return NativeMethods.git_refspec_src(refSpec);
+        }
+
+        public static string git_refspec_dst(GitRefSpecHandle refSpec)
+        {
+            return NativeMethods.git_refspec_dst(refSpec);
+        }
+
+        public static RefSpecDirection git_refspec_direction(GitRefSpecHandle refSpec)
+        {
+            return NativeMethods.git_refspec_direction(refSpec);
+        }
+
+        public static bool git_refspec_force(GitRefSpecHandle refSpec)
+        {
+            return NativeMethods.git_refspec_force(refSpec);
+        }
+
         #endregion
 
         #region git_remote_
@@ -1503,6 +1528,11 @@ namespace LibGit2Sharp.Core
         public static GitRefSpecHandle git_remote_get_refspec(RemoteSafeHandle remote, int n)
         {
             return NativeMethods.git_remote_get_refspec(remote, (UIntPtr)n);
+        }
+
+        public static int git_remote_refspec_count(RemoteSafeHandle remote)
+        {
+            return (int)NativeMethods.git_remote_refspec_count(remote);
         }
 
         public static void git_remote_download(RemoteSafeHandle remote)
@@ -1589,6 +1619,29 @@ namespace LibGit2Sharp.Core
             using (ThreadAffinity())
             {
                 int res = NativeMethods.git_remote_add_fetch(remote, refspec);
+                Ensure.ZeroResult(res);
+            }
+        }
+
+        public static void git_remote_add_push(RemoteSafeHandle remote, string refspec)
+        {
+            using (ThreadAffinity())
+            {
+                int res = NativeMethods.git_remote_add_push(remote, refspec);
+                Ensure.ZeroResult(res);
+            }
+        }
+
+        public static void git_remote_clear_refspecsc(RemoteSafeHandle remote)
+        {
+            NativeMethods.git_remote_clear_refspecs(remote);
+        }
+
+        public static void git_remote_remove_refspec(RemoteSafeHandle remote, int index)
+        {
+            using (ThreadAffinity())
+            {
+                int res = NativeMethods.git_remote_remove_refspec(remote, (UIntPtr)index);
                 Ensure.ZeroResult(res);
             }
         }
