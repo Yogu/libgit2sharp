@@ -265,6 +265,16 @@ namespace LibGit2Sharp.Tests.TestHelpers
             };
         }
 
+        /// <summary>
+        /// Sets the local user.name and user.email configuration to <see cref="Constants.Signature"/>
+        /// </summary>
+        /// <param name="repository"></param>
+        protected void SetupLocalUserConfig(Repository repository)
+        {
+            repository.Config.Set("user.name", Constants.Signature.Name);
+            repository.Config.Set("user.email", Constants.Signature.Email);
+        }
+
         protected static string Touch(string parent, string file, string content = null, Encoding encoding = null)
         {
             string filePath = Path.Combine(parent, file);
